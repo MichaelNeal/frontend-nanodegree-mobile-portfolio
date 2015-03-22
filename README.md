@@ -1,3 +1,33 @@
+-------------------------------------------------------
+Project P4: Website Optimization
+-------------------------------------------------------
+Steps taken to achieve a score above 90 with PageSpeed on ./index.html:
+ -  Moved GoogleAnalytics and JavaScript to bottom of html page.
+ - Combined style.css,print.css and external stylesheet into style.css
+ - Compressed combined style.css 
+ - Compressed ./img/profilepic.jpg
+ - Compressed and resized ../views/images/pizzeria.jpg
+ - Removed font download
+ - Changed links from remote images to local
+ - Compressed html
+
+  
+ Steps taken to optimize framerate on ./views/pizza.html:
+- Compressed and resized ./images/pizza.png 
+- Resized scrolling pizza to appropriate size
+- Compressed style.css and added to pizza.html removing call to style.css
+- Moved dx and newwidth outside of loop in changePizzaSizes function in main.js 
+ 
+ -------------------------------------------------------
+ Sources used
+-------------------------------------------------------
+http://www.jpegmini.com/
+http://www.textfixer.com/html/compress-html-compression.php
+http://cssminifier.com/
+http://www.google.com/
+http://compresspng.com/
+
+
 ## Website Performance Optimization portfolio project
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
