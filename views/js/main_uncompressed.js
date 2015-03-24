@@ -427,6 +427,7 @@ var resizePizzas = function(size) {
     var windowwidth = document.querySelector("#randomPizzas").offsetWidth;
     var oldsize = oldwidth / windowwidth;
 
+//	console.log("Size="+ size);
     // TODO: change to 3 sizes? no more xl?
     // Changes the slider value to a percent width
     function sizeSwitcher (size) {
@@ -450,12 +451,13 @@ var resizePizzas = function(size) {
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-	 var everyPizza = document.querySelectorAll(".randomPizzaContainer");
-	 // moved outside of loop since all pizzas are the same size
-      var dx = determineDx(everyPizza[0], size);
-      var resized = (determineDx(everyPizza[0].offsetWidth + dx) + 'px';
-    for (var i = 0; i < everyPizza.length; i++) {
-      everyPizza[i].style.width = resized;
+//	  I could use getElementsByClassName instead of querySelectorAll but it has it's own issues
+	  var allPizzas = document.querySelectorAll(".randomPizzaContainer");
+	  // moved outside of loop since all pizzas are the same size
+      var dx = determineDx(allPizzas[0], size);
+	  var newwidth = (allPizzas[0].offsetWidth + dx) + 'px';
+    for (var i = 0; i < allPizzas.length; i++) {
+      allPizzas[i].style.width = newwidth;
     }
   }
 
@@ -471,8 +473,9 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
-	// Moved pizzasDiv to outside of loop
- var pizzasDiv = document.getElementById("randomPizzas");
+
+  // Moved outside of loop to reduce total number of calculations
+  var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
@@ -506,8 +509,10 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   var items = document.querySelectorAll('.mover');
+  // Moved outside of function
+	var myScrollTop = document.body.scrollTop / 1250;
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    var phase = Math.sin(myScrollTop + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
@@ -528,10 +533,11 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  // reduced number of iterations in for loop
+  for (var i = 0; i < (s/cols); i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
-	//Reduced image size to make paint time less
+	// Reduced image size to reduce paint time
     elem.src = "images/pizza_sm.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
